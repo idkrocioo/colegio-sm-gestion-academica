@@ -59,26 +59,6 @@ Es un proyecto real utilizado como apoyo para la administración interna del col
 
 ---
 
-## 📁 Estructura del Proyecto
-
-colegio-sm-gestion-academica/
-│
-├── academico/
-│ ├── models.py
-│ ├── views.py
-│ ├── urls.py (si aplica)
-│ ├── templates/
-│ ├── static/
-│ └── migrations/
-│
-├── colegio/
-│ ├── settings.py
-│ ├── urls.py
-│ └── wsgi.py
-│
-├── manage.py
-└── INSTRUCCIONES.txt
-
 ## ▶ Instalación y Ejecución del Proyecto
 
 ### **1. Clonar repositorio**
@@ -148,3 +128,27 @@ Estudiante de Ingeniería en Informática – INACAP
 
 ## ⭐ Agradecimientos
 Proyecto desarrollado como parte de estudios y colaboración con el Colegio San Martín de Oasis.
+
+
+## 📁 Estructura del Proyecto
+
+```text
+colegio-sm-gestion-academica/
+├─ academico/
+│  ├─ management/
+│  ├─ migrations/
+│  ├─ static/
+│  ├─ templates/
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ tests.py
+│  └─ views.py
+├─ colegio/
+│  ├─ __init__.py
+│  ├─ asgi.py
+│  ├─ settings.py
+│  ├─ urls.py
+│  └─ wsgi.py
+├─ INSTRUCCIONES.txt
+└─ manage.py
