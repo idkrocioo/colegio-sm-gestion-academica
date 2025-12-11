@@ -1,0 +1,4 @@
+cmd code .
+py manage.py migrate
+py manage.py insertar_datos
+py manage.py runserver 

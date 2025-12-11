@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="icon" href="{% static "img/icon.png"%}"/>
+    <title>Formulario Actualizar</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+
+    <style>
+        /* General */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(90deg, #002b5c, #c8102e);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 3px solid #9b0f21;
+        }
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        header a {
+            color: #f8d64e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        .btn-back-home {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #c8102e;
+            text-decoration: none;
+            border-radius: 25px;
+            border: 2px solid white;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-back-home i {
+            margin-right: 8px;
+        }
+        .btn-back-home:hover {
+            background-color: #9b0f21;
+            color: #fff;
+            transform: scale(1.1);
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .form-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #002b5c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid #c8102e;
+            padding-bottom: 10px;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #002b5c;
+        }
+        .form-control {
+            border: 2px solid #c8102e;
+            background-color: #ffffff;
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #c8102e;
+            box-shadow: 0 0 10px #c8102e;
+            outline: none;
+        }
+        .btn-primary {
+            background-color: #c8102e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            display: block;
+            margin: 20px auto 0;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            transform: scale(1.1);
+            background-color: #9b0f21;
+        }
+        footer {
+            background-color: #002b5c;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+        footer a {
+            color: #c8102e;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <h1>Formulario Actualizar</h1>
+        <a href="/menu_principal" class="btn-back-home">
+            <i class="fas fa-home"></i> Volver al Inicio
+        </a>
+    </header>
+    <!-- Contenedor -->
+    <div class="form-container">
+        <h2>Actualizar Datos</h2>
+        {% if r %}
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Acción OK',
+                    text: '{{ r }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </script>
+        {% endif %}
+        {% if r2 %}
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '{{ r2 }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </script>
+        {% endif %}
+        <form action="/actualizar_alumnos/{{ alu.id }}" method="post">
+            {% csrf_token %}
+            <!-- Nombre -->
+            <div class="mb-4">
+                <label class="form-label" for="txtnom">Nombre</label>
+                <input class="form-control" id="txtnom" name="txtnom" type="text" placeholder="Ingrese nombre" required value="{{ alu.nombre }}">
+            </div>
+            <!-- Curso -->
+            <div class="mb-4">
+                <label class="form-label" for="txtcur">Curso</label>
+                <input class="form-control" id="txtcur" name="txtcur" type="text" placeholder="Ingrese curso" required value="{{ alu.curso }}">
+            </div>
+            <!-- Matrícula -->
+            <div class="mb-4">
+                <label class="form-label" for="txtmat">Matrícula</label>
+                <input class="form-control" id="txtmat" name="txtmat" type="text" placeholder="Ingrese matrícula" required value="{{ alu.matricula }}">
+            </div>
+            <h1 style="text-align:center;">Datos del Apoderado</h1>
+            <div class="mb-4">
+                <label class="form-label" for="txtapo">Nombre del apoderado</label>
+                <input class="form-control" id="txtapo" name="txtapo" placeholder="Ingrese matrícula" required type="text"value="{{ alu.apoderado.nombre }}"/>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="txtrut">Rut</label>
+                <input class="form-control" id="txtrut" name="txtrut" placeholder="Ingrese Rut del usuario: XXXXXXXX-X" required type="text" value="{{ alu.apoderado.rut }}"/>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="txtpas">Contraseña para acceder al sistema</label>
+                <input class="form-control" id="txtpas" name="txtpas" placeholder="Ingresa la contraseña" required type="password" value="{{ alu.apoderado.contraseña }}"/>
+            </div>
+            <!-- Botón -->
+            <button type="submit" class="btn-primary">Guardar Datos</button>
+        </form>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Colegio San Martín de Oasis. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:contacto@colegiosmoasis.cl">contacto@colegiosmoasis.cl</a> | Tel: +56 9 1234 5678</p>
+    </footer>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
