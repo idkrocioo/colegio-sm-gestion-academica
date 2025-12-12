@@ -77,6 +77,13 @@ Es un proyecto real utilizado como apoyo para la administración interna del col
 
 ---
 
+### ✏️ Editar Alumno
+Permite actualizar la información académica y personal del estudiante, manteniendo la integridad de los datos registrados en el sistema.
+
+![Editar Alumno](docs/screenshots/editar-alumno.png)
+
+---
+
 ## ▶ Instalación y Ejecución del Proyecto
 
 ### **1. Clonar repositorio**
