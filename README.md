@@ -42,11 +42,8 @@ Es un proyecto real utilizado como apoyo para la administración interna del col
 
 ## 📸 Capturas del Sistema
 
-> 📌 Coloca tus imágenes en una carpeta llamada **/docs** dentro del repositorio  
-> Ejemplo: `docs/login.png`, `docs/dashboard.png`
-
-### **🔐 Login**
-![Login](docs/login.png)
+### 🔐 Pantalla de Inicio de Sesión
+![Login](docs/screenshots/login.png)
 
 ### **🏠 Dashboard Principal**
 ![Dashboard](docs/dashboard.png)
