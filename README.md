@@ -45,14 +45,35 @@ Es un proyecto real utilizado como apoyo para la administración interna del col
 ### 🔐 Pantalla de Inicio de Sesión
 ![Login](docs/screenshots/login.png)
 
-### **🏠 Dashboard Principal**
-![Dashboard](docs/dashboard.png)
+---
 
-### **📝 Formulario de Notas**
-![Formulario Notas](docs/form_notas.png)
+### 🏠 Panel Principal
+![Dashboard](docs/screenshots/dashboard.png)
 
-### **👨‍🎓 Listado de Alumnos**
-![Listado Alumnos](docs/listado_alumnos.png)
+---
+
+### 📝 Registro de Notas
+![Registro de Notas](docs/screenshots/registro-notas.png)
+
+---
+
+### 📋 Listado de Notas
+![Listado de Notas](docs/screenshots/listado-notas.png)
+
+---
+
+### ✏️ Modificar Calificación
+![Editar Nota](docs/screenshots/editar-nota.png)
+
+---
+
+### 👤 Registro de Alumno
+![Registro Alumno](docs/screenshots/registro-alumno.png)
+
+---
+
+### 👥 Listado de Alumnos
+![Listado Alumnos](docs/screenshots/listado-alumnos.png)
 
 ---
 
