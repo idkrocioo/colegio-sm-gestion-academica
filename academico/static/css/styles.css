@@ -1,0 +1,1508 @@
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA DASHBOARD
+   ========================================================================== */
+
+.dashboard-hero {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.user-welcome {
+    font-size: 2.2rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.user-role {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));
+    color: white;
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.8rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.card-icon-notes {
+    background: linear-gradient(135deg, rgba(28, 167, 201, 0.15), rgba(107, 43, 130, 0.15));
+    color: var(--color-accent);
+}
+
+.card-icon-students {
+    background: linear-gradient(135deg, rgba(165, 22, 58, 0.15), rgba(26, 35, 64, 0.15));
+    color: var(--color-secondary);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.card-description {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    margin-top: auto;
+}
+
+.card-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.2rem;
+    background: var(--color-light);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    border-radius: 8px;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.card-action-btn:hover {
+    background: white;
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateX(4px);
+}
+
+.system-status {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.03), rgba(28, 167, 201, 0.03));
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border: 1px dashed rgba(26, 35, 64, 0.1);
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    color: var(--color-gray-dark);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .dashboard-hero {
+        padding: 1.5rem;
+    }
+    
+    .user-welcome {
+        font-size: 1.8rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   ESTILOS PARA FORMULARIOS DEL SISTEMA
+   ========================================================================== */
+
+.form-page-header {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.form-main-title {
+    font-size: 2rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: var(--color-gray);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+}
+
+.form-title {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.form-instruction {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 1.75rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-label-required::after {
+    content: " *";
+    color: var(--color-secondary);
+}
+
+.form-field-wrapper {
+    position: relative;
+}
+
+.form-field-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gray);
+    font-size: 1.1rem;
+    z-index: 5;
+}
+
+.form-select, .form-input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 2px solid var(--color-gray-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    color: var(--color-dark);
+    background: white;
+    transition: all var(--transition-normal);
+    appearance: none;
+}
+
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.5rem;
+}
+
+.form-select:focus, .form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(28, 167, 201, 0.1);
+}
+
+.form-helper {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(26, 35, 64, 0.08);
+}
+
+.btn-form-submit {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.btn-form-back {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-success-message {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2e7d32;
+}
+
+.form-error-message {
+    background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.05));
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #d32f2f;
+}
+
+.materias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.materia-option {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-gray-dark);
+}
+
+/* Responsividad para formularios */
+@media (max-width: 768px) {
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .form-main-title {
+        font-size: 1.7rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .materias-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   ESTILOS PARA LISTADOS DEL SISTEMA
+   ========================================================================== */
+
+.listado-header {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.listado-title {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.listado-subtitle {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+}
+
+.listado-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    overflow: hidden;
+}
+
+/* Tablas profesionales */
+.notas-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.notas-table thead {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2a3758 100%);
+}
+
+.notas-table th {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 1.2rem;
+    border: none;
+    text-align: left;
+}
+
+.notas-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.notas-table th:last-child {
+    border-top-right-radius: 8px;
+    text-align: center;
+}
+
+.notas-table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(26, 35, 64, 0.08);
+}
+
+.notas-table tbody tr:hover {
+    background-color: rgba(28, 167, 201, 0.04);
+    transform: translateY(-1px);
+}
+
+.notas-table td {
+    padding: 1rem 1.2rem;
+    color: var(--color-dark);
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border: none;
+}
+
+.notas-table td:last-child {
+    text-align: center;
+    width: 120px;
+}
+
+/* Indicadores de nota */
+.nota-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.nota-baja { background-color: #f44336; }
+.nota-media { background-color: #ff9800; }
+.nota-alta { background-color: #4caf50; }
+.nota-excelente { background-color: #2196f3; }
+
+/* Botones de acción */
+.acciones-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-accion {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background: rgba(28, 167, 201, 0.1);
+    color: var(--color-accent);
+}
+
+.btn-editar:hover {
+    background: var(--color-accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-eliminar {
+    background: rgba(165, 22, 58, 0.1);
+    color: var(--color-secondary);
+}
+
+.btn-eliminar:hover {
+    background: var(--color-secondary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Estado vacío */
+.estado-vacio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-gray);
+}
+
+.estado-vacio-icon {
+    font-size: 3rem;
+    color: var(--color-gray-light);
+    margin-bottom: 1rem;
+}
+
+/* Responsive - Versión cards para móvil */
+@media (max-width: 768px) {
+    .notas-table {
+        display: none;
+    }
+    
+    .notas-cards {
+        display: block;
+    }
+    
+    .nota-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(26, 35, 64, 0.08);
+        transition: all 0.2s ease;
+    }
+    
+    .nota-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .card-id {
+        font-size: 0.8rem;
+        color: var(--color-gray);
+        font-weight: 600;
+        background: rgba(26, 35, 64, 0.05);
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+    }
+    
+    .card-alumno {
+        font-weight: 600;
+        color: var(--color-primary);
+        font-size: 1.1rem;
+    }
+    
+    .card-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .detail-label {
+        font-size: 0.75rem;
+        color: var(--color-gray);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.2rem;
+    }
+    
+    .detail-value {
+        font-weight: 500;
+        color: var(--color-dark);
+    }
+    
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .btn-accion-mobile {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    .notas-cards {
+        display: none;
+    }
+}
+
+/* Contador de registros */
+.registros-count {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    margin-top: 1rem;
+    text-align: right;
+}
+
+/* ==========================================================================
+   ESTILOS PARA FORMULARIOS DE REGISTRO DE ALUMNOS
+   ========================================================================== */
+
+.form-page-header {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.form-main-title {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(26, 35, 64, 0.1);
+}
+
+.section-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.icon-student {
+    background: linear-gradient(135deg, rgba(28, 167, 201, 0.15), rgba(107, 43, 130, 0.15));
+    color: var(--color-accent);
+}
+
+.icon-tutor {
+    background: linear-gradient(135deg, rgba(165, 22, 58, 0.15), rgba(26, 35, 64, 0.15));
+    color: var(--color-secondary);
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin: 0;
+}
+
+.section-description {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-label i {
+    margin-right: 0.5rem;
+    color: var(--color-accent);
+    font-size: 1.1rem;
+}
+
+.form-label-required::after {
+    content: " *";
+    color: var(--color-secondary);
+    margin-left: 2px;
+}
+
+.form-input-wrapper {
+    position: relative;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--color-gray-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    color: var(--color-dark);
+    background: white;
+    transition: all var(--transition-normal);
+}
+
+.form-control-custom:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(28, 167, 201, 0.1);
+}
+
+.form-control-custom:hover {
+    border-color: rgba(28, 167, 201, 0.3);
+}
+
+.form-helper {
+    font-size: 0.8rem;
+    color: var(--color-gray);
+    margin-top: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(26, 35, 64, 0.08);
+}
+
+.btn-form-submit {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.btn-form-back {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-message-success {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2e7d32;
+}
+
+.form-message-error {
+    background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.05));
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #d32f2f;
+}
+
+/* Indicador de fortaleza de contraseña */
+.password-strength {
+    margin-top: 0.5rem;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-gray-light);
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-weak { 
+    background-color: #f44336; 
+    width: 33%; 
+}
+
+.strength-medium { 
+    background-color: #ff9800; 
+    width: 66%; 
+}
+
+.strength-strong { 
+    background-color: #4caf50; 
+    width: 100%; 
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-main-title {
+        font-size: 1.6rem;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================================
+   ESTILOS PARA LISTADO DE ALUMNOS
+   ========================================================================== */
+
+.listado-header {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.listado-title {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.listado-subtitle {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+}
+
+.listado-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    overflow: hidden;
+}
+
+/* Tablas profesionales */
+.alumnos-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.alumnos-table thead {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2a3758 100%);
+}
+
+.alumnos-table th {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 1.2rem;
+    border: none;
+    text-align: left;
+}
+
+.alumnos-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.alumnos-table th:last-child {
+    border-top-right-radius: 8px;
+    text-align: center;
+}
+
+.alumnos-table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(26, 35, 64, 0.08);
+}
+
+.alumnos-table tbody tr:hover {
+    background-color: rgba(28, 167, 201, 0.04);
+    transform: translateY(-1px);
+}
+
+.alumnos-table td {
+    padding: 1rem 1.2rem;
+    color: var(--color-dark);
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border: none;
+}
+
+.alumnos-table td:last-child {
+    text-align: center;
+    width: 140px;
+}
+
+/* Indicador de curso */
+.curso-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.curso-basica {
+    background: rgba(28, 167, 201, 0.15);
+    color: var(--color-accent);
+    border: 1px solid rgba(28, 167, 201, 0.3);
+}
+
+.curso-media {
+    background: rgba(165, 22, 58, 0.15);
+    color: var(--color-secondary);
+    border: 1px solid rgba(165, 22, 58, 0.3);
+}
+
+/* Matrícula */
+.matricula-tag {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--color-gray-dark);
+    background: rgba(26, 35, 64, 0.05);
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+/* Botones de acción */
+.acciones-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-accion {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background: rgba(28, 167, 201, 0.1);
+    color: var(--color-accent);
+}
+
+.btn-editar:hover {
+    background: var(--color-accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-eliminar {
+    background: rgba(165, 22, 58, 0.1);
+    color: var(--color-secondary);
+}
+
+.btn-eliminar:hover {
+    background: var(--color-secondary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Estado vacío */
+.estado-vacio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-gray);
+}
+
+.estado-vacio-icon {
+    font-size: 3rem;
+    color: var(--color-gray-light);
+    margin-bottom: 1rem;
+}
+
+/* Contador de registros */
+.registros-count {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    margin-top: 1rem;
+    text-align: right;
+}
+
+/* Responsive - Versión cards para móvil */
+@media (max-width: 768px) {
+    .alumnos-table {
+        display: none;
+    }
+    
+    .alumnos-cards {
+        display: block;
+    }
+    
+    .alumno-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(26, 35, 64, 0.08);
+        transition: all 0.2s ease;
+    }
+    
+    .alumno-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .card-id {
+        font-size: 0.8rem;
+        color: var(--color-gray);
+        font-weight: 600;
+        background: rgba(26, 35, 64, 0.05);
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+    }
+    
+    .card-alumno {
+        font-weight: 600;
+        color: var(--color-primary);
+        font-size: 1.1rem;
+    }
+    
+    .card-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .detail-label {
+        font-size: 0.75rem;
+        color: var(--color-gray);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.2rem;
+    }
+    
+    .detail-value {
+        font-weight: 500;
+        color: var(--color-dark);
+    }
+    
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .btn-accion-mobile {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    .alumnos-cards {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   ESTILOS PARA FORMULARIOS DE ACTUALIZACIÓN
+   ========================================================================== */
+
+.form-page-header {
+    background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.form-main-title {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+}
+
+.form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+}
+
+.form-title-text {
+    font-size: 1.6rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-description {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Indicador de modificación actual */
+.current-info {
+    background: linear-gradient(135deg, rgba(28, 167, 201, 0.08), rgba(107, 43, 130, 0.05));
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px dashed rgba(28, 167, 201, 0.2);
+}
+
+.current-info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: var(--color-gray-dark);
+}
+
+.current-info-item i {
+    color: var(--color-accent);
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.current-value {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* Grid del formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-group-full {
+        grid-column: span 2;
+    }
+}
+
+/* Selects e Inputs personalizados */
+.form-select-wrapper, .form-input-wrapper {
+    position: relative;
+}
+
+/* Reemplaza la clase .form-select-custom con esto: */
+.form-select-custom {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--color-gray-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    color: var(--color-dark);
+    background: white;
+    transition: all var(--transition-normal);
+    
+    /* Flecha personalizada única */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a2340' viewBox='0 0 16 16'%3E%3Cpath d='M8 11.5a.5.5 0 0 1-.354-.146l-4-4a.5.5 0 1 1 .708-.708L8 10.293l3.646-3.647a.5.5 0 0 1 .708.708l-4 4A.5.5 0 0 1 8 11.5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 14px 14px;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-select-custom:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(28, 167, 201, 0.1);
+}
+
+.form-select-custom:hover {
+    border-color: rgba(28, 167, 201, 0.3);
+}
+
+/* Indicador visual de nota */
+.nota-indicator {
+    margin-top: 0.75rem;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, 
+        #f44336 0%, 
+        #f44336 16.66%, 
+        #ff9800 16.66%, 
+        #ff9800 33.33%, 
+        #ffeb3b 33.33%, 
+        #ffeb3b 50%, 
+        #8bc34a 50%, 
+        #8bc34a 66.66%, 
+        #4caf50 66.66%, 
+        #4caf50 83.33%, 
+        #2196f3 83.33%, 
+        #2196f3 100%);
+    position: relative;
+    overflow: visible;
+}
+
+.nota-marker {
+    position: absolute;
+    top: -4px;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border: 2px solid var(--color-accent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    transition: left 0.3s ease;
+}
+
+.nota-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-gray);
+}
+
+/* Acciones del formulario */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(26, 35, 64, 0.08);
+}
+
+.btn-form-submit {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.btn-form-back {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Mensajes del sistema */
+.form-message-success {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #2e7d32;
+}
+
+.form-message-error {
+    background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.05));
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #d32f2f;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .form-main-title {
+        font-size: 1.6rem;
+    }
+    
+    .form-title-text {
+        font-size: 1.4rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group-full {
+        grid-column: span 1;
+    }
+}
+
+/* ==========================================================================
+   FORMULARIO ACTUALIZAR ALUMNO - CLASES REUTILIZABLES
+   ========================================================================== */
+
+/* Contenedor de página de formulario */
+.form-page {
+    min-height: calc(100vh - 76px);
+    padding: 2rem 0;
+    background: linear-gradient(135deg, 
+        rgba(26, 35, 64, 0.03) 0%, 
+        rgba(28, 167, 201, 0.03) 100%);
+}
+
+/* Encabezado minimalista */
+.form-header-minimal {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Tarjeta moderna */
+.form-card-modern {
+    background: white;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Secciones */
+.form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+}
+
+/* Títulos de sección */
+.section-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(26, 35, 64, 0.1);
+}
+
+/* Inputs modernos */
+.form-input-modern {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--color-gray-light);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    color: var(--color-dark);
+    background: white;
+    transition: all var(--transition-normal);
+}
+
+/* Acciones */
+.form-actions-modern {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(26, 35, 64, 0.08);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions-modern {
+        flex-direction: column;
+    }
+}

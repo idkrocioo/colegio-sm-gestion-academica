@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from academico.models import Alumno, Nota,Usuarios;
+from academico.models import Alumno, Nota, Usuarios
 from django.contrib import messages
+from django.utils import timezone
 
 #ANTES USAR EL INSERTAR DATOS
 #py manage.py makemigrations
@@ -17,33 +18,31 @@ def IniciarSesion(request):
         pas = request.POST.get("txtpas")
         
         try:
-            # Buscar el usuario por RUT
             usuario = Usuarios.objects.get(rut=rut)
-
-            # Verificar la contraseña
+            
             if usuario.contraseña == pas:
-                # Iniciar sesión y registrar en el historial
                 request.session["estadoSesion"] = True
                 request.session["idUsuario"] = usuario.id
                 request.session["nomUsuario"] = usuario.nombre
                 request.session["rutUsuario"] = usuario.rut
-
-                # Redirigir según el tipo de usuario
-                datos = {"nomUsuario": usuario.nombre, "rutUsuario": usuario.rut, "idUsuario": usuario.id}
-                if rut == "11222333-4":
-                    return render(request, 'menu.html', datos)
-                else:
-                    return render(request, 'menu_2.html', datos)
+                
+                # Datos para el dashboard
+                datos = {
+                    "nomUsuario": usuario.nombre, 
+                    "rutUsuario": usuario.rut, 
+                    "idUsuario": usuario.id
+                }
+                
+                # Usar dashboard.html para ambos tipos de usuarios
+                return render(request, 'dashboard.html', datos)
+                
             else:
-                # Contraseña incorrecta
                 messages.error(request, "Usuario o contraseña incorrectos.")
                 return render(request, 'index.html')
-
+                
         except Usuarios.DoesNotExist:
-            # Usuario no encontrado
             messages.error(request, "Acceso denegado. Usuario o contraseña incorrectos.")
             return render(request, 'index.html')
-
     else:
         messages.error(request, "No se puede procesar la solicitud.")
         return render(request, 'index.html')
@@ -67,13 +66,18 @@ def volverMenu(request):
         rutUsuario = request.session.get("rutUsuario")
         if rutUsuario == "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
-            return render(request,'menu.html',{'nomUsuario':nomUsuario})
+            datos = {
+                "nomUsuario": nomUsuario,
+                "rutUsuario": rutUsuario
+            }
+            return render(request, 'dashboard.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
+
 #---------------------------------------------------------------------
 #-----------------------Registrar Notas--------------------------------
 #---------------------------------------------------------------------
@@ -84,17 +88,14 @@ def MostrarFormRegistrarNotas(request):
         if rutUsuario == "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
             alu = Alumno.objects.all().values().order_by("nombre")
-            datos ={ 'alu':alu, nomUsuario: 'nomUsuario'}
-            return render(request, 'form_registrar_notas.html' ,datos)
+            datos ={ 'alu':alu, 'nomUsuario': nomUsuario}
+            return render(request, 'registro_notas.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
-   
-
-   
+        return render(request, 'index.html', datos)
 
 def InsertarNotas(request):
     estadoSesion = request.session.get("estadoSesion")
@@ -112,15 +113,15 @@ def InsertarNotas(request):
                 notaa = float(nota)
                 if notaa <1 or notaa >7:
                     datos = {'r2':'Nota debe ser entre 1.0 y 7.0'}
-                    return render(request,  'form_registrar_notas.html', datos)
+                    return render(request,  'registro_notas.html', datos)
 
                 notas = Nota(alumno=alumno, materia=mat, nota=notaa)
                 notas.save()
                 datos = {'r':'Nota ingresada correctamente'}
-                return render(request,  'form_registrar_notas.html', datos)
+                return render(request,  'registro_notas.html', datos)
             else:
-                datos = {'notas':notas, 'r2':'Error al ingresar la Nota'}
-                return render(request,  'form_registrar_notas.html', datos)
+                datos = {'r2':'Error al ingresar la Nota'}
+                return render(request,  'registro_notas.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
             return render(request, 'index.html',datos)
@@ -131,7 +132,7 @@ def InsertarNotas(request):
 #---------------------------------------------------------------------
 #-----------------------Modificar Notas--------------------------------
 #---------------------------------------------------------------------
-def MostrarModificarNotas(request,id):
+def MostrarModificarNotas(request, id):
     estadoSesion = request.session.get("estadoSesion")
     if estadoSesion is True:
         rutUsuario = request.session.get("rutUsuario")
@@ -157,17 +158,18 @@ def MostrarModificarNotas(request,id):
             datos = {
                 'nota': nota,         
                 'alumnos': alumnos,   
-                'materias': materias  
+                'materias': materias,
+                'nomUsuario': nomUsuario
             }
-            return render(request, 'form_actualizar.html', datos)
+            return render(request, 'actualizar_notas.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
     
-def ModificarNotas(request,id):
+def ModificarNotas(request, id):
     try:
         estadoSesion = request.session.get("estadoSesion")
         if estadoSesion is True:
@@ -177,29 +179,35 @@ def ModificarNotas(request,id):
                 if request.method == 'POST':
                     alu = request.POST['cboalu']
                     mat = request.POST['cbomat']
-                    nota = request.POST['txtnot']
+                    nota_valor = request.POST['txtnot']
 
-                    notas = Nota.objects.get(id = id)
-
-                    notas.alumno = Alumno.objects.get(id= alu) 
-                    notas.materia = mat
-                    notas.nota = float(nota)
-                    notas.save()
+                    nota = Nota.objects.get(id = id)
+                    nota.alumno = Alumno.objects.get(id= alu) 
+                    nota.materia = mat
+                    nota.nota = float(nota_valor)
+                    nota.save()
+                    
                     notas = Nota.objects.select_related("alumno").all()
-
-                    datos = {'r': 'La nota ha sido modificada exitosamente', 'nota': nota , 'notas':notas}
+                    
+                    datos = {
+                        'r': 'La nota ha sido modificada exitosamente', 
+                        'notas': notas,
+                        'nomUsuario': nomUsuario
+                    }
                     return render(request, 'listado_notas.html', datos)
                 else:
-                        return render(request, 'form_actualizar.html')
+                    # Si no es POST, redirigir al formulario de modificación
+                    return MostrarModificarNotas(request, id)
             else:
                 datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-                return render(request, 'index.html',datos)
+                return render(request, 'index.html', datos)
         else:
             datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-            return render(request, 'index.html',datos)
-    except:
+            return render(request, 'index.html', datos)
+    except Exception as e:
         datos = {'r2': 'No se pudo modificar la nota!!'}
-        return render(request, 'listado_notas   .html',datos)
+        return render(request, 'actualizar_notas.html', datos)
+
 #---------------------------------------------------------------------
 #-----------------------Eliminar Notas--------------------------------
 #---------------------------------------------------------------------
@@ -222,11 +230,10 @@ def EliminarNotas(request,id):
         else:
             datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
             return render(request, 'index.html',datos)
-    except:
+    except Exception as e:
         notas = Nota.objects.select_related("alumno").all()
-        datos = {'nom' :nom,'r':'La nota no existe ('+str(id)+')','notas':notas}
+        datos = {'r':'La nota no existe ('+str(id)+')','notas':notas}
         return render(request,  'listado_notas.html',datos)
-
 
 #---------------------------------------------------------------------
 #-----------------------Listar Notas--------------------------------
@@ -238,14 +245,18 @@ def MostrarListadoNotas(request):
         if rutUsuario == "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
             notas = Nota.objects.select_related("alumno").all()
-            datos= {'notas' :notas}
-            return render(request,  'listado_notas.html', datos)
+            datos = {
+                'notas': notas,
+                'nomUsuario': nomUsuario
+            }
+            return render(request, 'listado_notas.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
+
 #---------------------------------------------------------------------
 #-----------------------Listar Alumnos --------------------------------
 #---------------------------------------------------------------------
@@ -256,18 +267,21 @@ def MostrarListadoAlumnos(request):
         if rutUsuario == "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
             alu = Alumno.objects.all()
-            datos= {'alu' :alu}
-            return render(request,  'listado_alumnos.html', datos)
+            datos = {
+                'alu': alu,
+                'nomUsuario': nomUsuario
+            }
+            return render(request, 'listado_alumnos.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
+
 #---------------------------------------------------------------------
 #-----------------------eliminar Alumnos --------------------------------
 #---------------------------------------------------------------------
-
 def EliminarAlumnos(request,id):
     try:
         estadoSesion = request.session.get("estadoSesion")
@@ -287,28 +301,32 @@ def EliminarAlumnos(request,id):
         else:
             datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
             return render(request, 'index.html',datos) 
-    except:
+    except Exception as e:
         alu = Alumno.objects.all()
         datos = {'r2': 'Error al eliminar el Alumno/a!!', 'alu':alu}
         return render(request,  'listado_alumnos.html', datos)
+
 #---------------------------------------------------------------------
 #-----------------------Actualizar Alumnos --------------------------------
 #---------------------------------------------------------------------
-def MostrarModificarAlumnos(request,id):
+def MostrarModificarAlumnos(request, id):
     estadoSesion = request.session.get("estadoSesion")
     if estadoSesion is True:
         rutUsuario = request.session.get("rutUsuario")
         if rutUsuario == "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
             alu = Alumno.objects.get(id=id)
-            datos= {'alu' :alu}
-            return render(request,'form_actualizar_alumnos.html',datos)
+            datos = {
+                'alu': alu,
+                'nomUsuario': nomUsuario  # Para mantener consistencia
+            }
+            return render(request, 'form_actualizar_alumnos.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
 
 def ModificarAlumnos(request,id):
     try:
@@ -346,10 +364,11 @@ def ModificarAlumnos(request,id):
         else:
             datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
             return render(request, 'index.html',datos)
-    except:
+    except Exception as e:
         alu = Alumno.objects.all()
-        datos = {'nom' :nom,'r':'El alumno no existe ('+str(id)+') o ocurrio un error inesperado','alu':alu}
+        datos = {'r':'El alumno no existe ('+str(id)+') o ocurrio un error inesperado','alu':alu}
         return render(request,  'listado_alumnos.html',datos)
+        
 #---------------------------------------------------------------------
 #-----------------------registrar Alumnos --------------------------------
 #---------------------------------------------------------------------
@@ -359,13 +378,14 @@ def MostrarFormRegistrarAlumnos(request):
         rutUsuario = request.session.get("rutUsuario")
         if rutUsuario == "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
-            return render(request,'form_registrar_alumnos.html')
+            return render(request, 'form_registrar_alumnos.html', {'nomUsuario': nomUsuario})
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
+
 def InsertarAlumnos(request):
     estadoSesion = request.session.get("estadoSesion")
     if estadoSesion is True:
@@ -383,18 +403,16 @@ def InsertarAlumnos(request):
 
             alu = Alumno(nombre=nom, curso=cur, matricula=mat, apoderado = apo)
             alu.save()
-            datos = {'r':'Nota ingresada correctamente','alu':alu}
-            return render(request,'form_registrar_alumnos.html',datos)
+            datos = {'r': 'Alumno registrado correctamente', 'nomUsuario': nomUsuario}
+            return render(request, 'registro_alumno.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)
     
 #-------------------------APODERADOS------------------------------------
-
-    
 def MostrarListadoNotasAlumno(request,id):
     estadoSesion = request.session.get("estadoSesion")
     if estadoSesion is True:
@@ -419,10 +437,15 @@ def volverMenu2(request):
         idUsuario = request.session.get("idUsuario")
         if rutUsuario != "11222333-4":
             nomUsuario = request.session.get("nomUsuario")
-            return render(request,'menu_2.html',{'nomUsuario':nomUsuario,'idUsuario':idUsuario})
+            datos = {
+                "nomUsuario": nomUsuario,
+                "rutUsuario": rutUsuario,
+                "idUsuario": idUsuario
+            }
+            return render(request, 'dashboard.html', datos)
         else:
             datos = {'r2': 'No tiene permisos suficientes para acceder!!'}
-            return render(request, 'index.html',datos)
+            return render(request, 'index.html', datos)
     else:
         datos = {'r2': 'Debe iniciar sesion para acceder!!!'}
-        return render(request, 'index.html',datos)
+        return render(request, 'index.html', datos)

@@ -1,0 +1,374 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="icon" href="{% static 'img/icon.png' %}" />
+    <title>Panel Principal – Colegio San Martín de Oasis</title>
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    
+    <!-- Bootstrap 5 -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    
+    <!-- CSS del Dashboard -->
+    <style>
+        /* Estilos específicos para el dashboard */
+        .dashboard-hero {
+            background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border-left: 4px solid #1CA7C9;
+        }
+        
+        .user-welcome {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #1A2340;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .user-role {
+            display: inline-block;
+            background: linear-gradient(135deg, #1CA7C9, #6B2B82);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 12px rgba(26, 35, 64, 0.12);
+            border: 1px solid rgba(26, 35, 64, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(26, 35, 64, 0.16);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .card-icon-notes {
+            background: linear-gradient(135deg, rgba(28, 167, 201, 0.15), rgba(107, 43, 130, 0.15));
+            color: #1CA7C9;
+        }
+        
+        .card-icon-students {
+            background: linear-gradient(135deg, rgba(165, 22, 58, 0.15), rgba(26, 35, 64, 0.15));
+            color: #A5163A;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1A2340;
+            margin: 0;
+        }
+        
+        .card-description {
+            color: #6C757D;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-top: auto;
+        }
+        
+        .card-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.2rem;
+            background: #F8F9FA;
+            border: 1px solid rgba(26, 35, 64, 0.1);
+            border-radius: 8px;
+            color: #1A2340;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .card-action-btn:hover {
+            background: white;
+            border-color: #1CA7C9;
+            color: #1CA7C9;
+            transform: translateX(4px);
+        }
+        
+        .system-status {
+            background: linear-gradient(135deg, rgba(26, 35, 64, 0.03), rgba(28, 167, 201, 0.03));
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px dashed rgba(26, 35, 64, 0.1);
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            color: #343A40;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-hero {
+                padding: 1.5rem;
+            }
+            
+            .user-welcome {
+                font-size: 1.8rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Hero Section con Bienvenida -->
+        <div class="dashboard-hero">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="user-welcome">Bienvenido/a, {{ nomUsuario }}</h1>
+                    <p class="text-muted mb-2">
+                        Sistema de Gestión Académica del Colegio San Martín de Oasis
+                    </p>
+                    <span class="user-role">
+                        <i class='bx bxs-shield-alt'></i>
+                        {% if rutUsuario == "11222333-4" %}
+                            Administrador del Sistema
+                        {% else %}
+                            Apoderado Autorizado
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <button class="btn btn-outline-danger btn-lg" onclick="botonCerrarSesion()">
+                        <i class='bx bx-log-out'></i>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tarjetas de Módulos -->
+        <div class="dashboard-grid">
+            <!-- Tarjeta: Gestión de Notas -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon card-icon-notes">
+                        <i class='bx bxs-book'></i>
+                    </div>
+                    <h3 class="card-title">Gestión Académica</h3>
+                </div>
+                
+                <p class="card-description">
+                    Administra el registro y consulta de calificaciones. Ingresa nuevas notas, 
+                    modifica registros existentes y consulta el historial académico completo.
+                </p>
+                
+                <div class="card-actions">
+                    <a href="/form_registrar_notas" class="card-action-btn">
+                        <span>
+                            <i class='bx bxs-plus-circle'></i>
+                            Registrar Nueva Nota
+                        </span>
+                        <i class='bx bx-chevron-right'></i>
+                    </a>
+                    
+                    <a href="/listado_notas" class="card-action-btn">
+                        <span>
+                            <i class='bx bxs-list-ul'></i>
+                            Ver Listado Completo
+                        </span>
+                        <i class='bx bx-chevron-right'></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Tarjeta: Gestión de Alumnos -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon card-icon-students">
+                        <i class='bx bxs-graduation'></i>
+                    </div>
+                    <h3 class="card-title">Control Estudiantil</h3>
+                </div>
+                
+                <p class="card-description">
+                    Gestiona el registro de estudiantes, actualiza información personal, 
+                    consulta datos de matrícula y administra el historial completo de alumnos.
+                </p>
+                
+                <div class="card-actions">
+                    <a href="/form_registrar_alumnos" class="card-action-btn">
+                        <span>
+                            <i class='bx bxs-user-plus'></i>
+                            Registrar Nuevo Alumno
+                        </span>
+                        <i class='bx bx-chevron-right'></i>
+                    </a>
+                    
+                    <a href="/listado_alumnos" class="card-action-btn">
+                        <span>
+                            <i class='bx bxs-group'></i>
+                            Ver Todos los Alumnos
+                        </span>
+                        <i class='bx bx-chevron-right'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Estado del Sistema -->
+        <div class="system-status">
+            <h5 class="mb-3" style="color: #1A2340;">
+                <i class='bx bxs-dashboard'></i>
+                Estado del Sistema
+            </h5>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="status-item">
+                        <i class='bx bxs-check-circle'></i>
+                        <span>Sesión activa como: <strong>{{ nomUsuario }}</strong></span>
+                    </div>
+                    <div class="status-item">
+                        <i class='bx bxs-calendar'></i>
+                        <span>Sistema actualizado al {% now "d/m/Y" %}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="status-item">
+                        <i class='bx bxs-shield'></i>
+                        <span>Conexión segura establecida</span>
+                    </div>
+                    <div class="status-item">
+                        <i class='bx bxs-time-five'></i>
+                        <span>Último acceso: Reciente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema de Mensajes -->
+    {% if r %}
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Operación Exitosa',
+            text: '{{ r }}',
+            showConfirmButton: false,
+            timer: 2000,
+            position: 'top-end',
+            toast: true
+        });
+    </script>
+    {% endif %}
+    
+    {% if r2 %}
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error en la Operación',
+            text: '{{ r2 }}',
+            showConfirmButton: false,
+            timer: 3000,
+            position: 'top-end',
+            toast: true
+        });
+    </script>
+    {% endif %}
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Función para Cerrar Sesión con Confirmación
+        function botonCerrarSesion() {
+            Swal.fire({
+                title: '¿Cerrar Sesión?',
+                text: 'Se terminará tu sesión actual en el sistema.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#A5163A',
+                cancelButtonColor: '#6C757D',
+                confirmButtonText: 'Sí, Cerrar Sesión',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                background: '#FFFFFF',
+                color: '#212529'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            });
+        }
+        
+        // Inicialización de Tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+</html>

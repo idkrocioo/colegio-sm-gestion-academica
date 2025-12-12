@@ -1,226 +1,487 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Notas</title>
-    {% load static %}
-    <link rel="icon" href="{% static "img/icon.png"%}"/>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+{% extends "base.html" %}
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            color: #333;
-        }
-        header {
-            background: linear-gradient(90deg, #002b5c, #c8102e);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            border-bottom: 3px solid #9b0f21;
-        }
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin: 0;
-        }
-        header a {
-            color: #f8d64e;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        header a:hover {
-            text-decoration: underline;
-        }
-        .btn-back-home {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            background-color: #c8102e;
-            text-decoration: none;
-            border-radius: 25px;
-            border: 2px solid white;
-            transition: all 0.3s ease-in-out;
+{% block title %}Listado de Notas – Colegio San Martín de Oasis{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Colores directos (sin variables por ahora) */
+    .color-primary { color: #1A2340; }
+    .color-secondary { color: #A5163A; }
+    .color-accent { color: #1CA7C9; }
+    .color-gray { color: #6C757D; }
+    .color-dark { color: #212529; }
+    
+    .bg-primary { background-color: #1A2340; }
+    .bg-secondary { background-color: #A5163A; }
+    .bg-accent { background-color: #1CA7C9; }
+    
+    .listado-header {
+        background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid #1CA7C9;
+    }
+    
+    .listado-title {
+        font-size: 1.8rem;
+        color: #1A2340;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .listado-subtitle {
+        color: #6C757D;
+        font-size: 0.95rem;
+    }
+    
+    .listado-container {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 12px rgba(26, 35, 64, 0.12);
+        border: 1px solid rgba(26, 35, 64, 0.1);
+        overflow: hidden;
+    }
+    
+    /* Tabla profesional */
+    .notas-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    
+    .notas-table thead {
+        background: linear-gradient(135deg, #1A2340 0%, #2a3758 100%);
+    }
+    
+    .notas-table th {
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 1rem 1.2rem;
+        border: none;
+        text-align: left;
+    }
+    
+    .notas-table th:first-child {
+        border-top-left-radius: 8px;
+    }
+    
+    .notas-table th:last-child {
+        border-top-right-radius: 8px;
+        text-align: center;
+    }
+    
+    .notas-table tbody tr {
+        transition: all 0.2s ease;
+        border-bottom: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .notas-table tbody tr:hover {
+        background-color: rgba(28, 167, 201, 0.04);
+        transform: translateY(-1px);
+    }
+    
+    .notas-table td {
+        padding: 1rem 1.2rem;
+        color: #212529;
+        font-size: 0.95rem;
+        vertical-align: middle;
+        border: none;
+    }
+    
+    .notas-table td:last-child {
+        text-align: center;
+        width: 120px;
+    }
+    
+    /* Indicador de nivel de nota */
+    .nota-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+    
+    .nota-baja { background-color: #f44336; }
+    .nota-media { background-color: #ff9800; }
+    .nota-alta { background-color: #4caf50; }
+    .nota-excelente { background-color: #2196f3; }
+    
+    /* Botones de acción */
+    .acciones-cell {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    
+    .btn-accion {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    
+    .btn-editar {
+        background: rgba(28, 167, 201, 0.1);
+        color: #1CA7C9;
+    }
+    
+    .btn-editar:hover {
+        background: #1CA7C9;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .btn-eliminar {
+        background: rgba(165, 22, 58, 0.1);
+        color: #A5163A;
+    }
+    
+    .btn-eliminar:hover {
+        background: #A5163A;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    /* Estado vacío */
+    .estado-vacio {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #6C757D;
+    }
+    
+    .estado-vacio-icon {
+        font-size: 3rem;
+        color: #E9ECEF;
+        margin-bottom: 1rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .notas-table {
+            display: none;
         }
         
-        .btn-back-home i {
-            margin-right: 8px;
+        .notas-cards {
+            display: block;
         }
         
-        .btn-back-home:hover {
-            background-color: #9b0f21;
-            color: #fff;
-            transform: scale(1.1);
-        }
-        .container {
-            margin: 40px auto;
-            max-width: 1100px;
-            background-color: #ffffff;
+        .nota-card {
+            background: white;
             border-radius: 10px;
-            padding: 20px 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(26, 35, 64, 0.08);
+            transition: all 0.2s ease;
         }
-        .table {
-            margin-top: 20px;
-            border-collapse: collapse;
-            width: 100%;
+        
+        .nota-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
         }
-        .table thead {
-            background-color: #002b5c;
-            color: white;
-        }
-        .table th, .table td {
-            text-align: center;
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: middle; /* Alineación vertical */
-        }
-        .table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .table-hover tbody tr:hover {
-            background-color: #f1e0e0;
-        }
-        .btn-icon {
-            background-color: #c8102e;
-            color: white;
-            border: none;
-            font-size: 1.1rem;
-            padding: 10px;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: inline-flex;
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(26, 35, 64, 0.08);
         }
-        .btn-icon:hover {
-            background-color: #9b0f21;
-            transform: scale(1.1);
+        
+        .card-id {
+            font-size: 0.8rem;
+            color: #6C757D;
+            font-weight: 600;
+            background: rgba(26, 35, 64, 0.05);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
         }
-        .btn-icon-edit {
-            background-color: #002b5c;
+        
+        .card-alumno {
+            font-weight: 600;
+            color: #1A2340;
+            font-size: 1.1rem;
         }
-        .btn-icon-edit:hover {
-            background-color: #001d4a;
+        
+        .card-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
         }
-        footer {
-            position: fixed; /* Fijo en la parte inferior */
-            bottom: 0;
-            width: 100%; /* Ocupa todo el ancho */
-            background-color: #002b5c;
-            color: white;
-            text-align: center;
-            padding: 15px;
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
         }
-        footer a {
-            color: #c8102e;
-            text-decoration: none;
+        
+        .detail-label {
+            font-size: 0.75rem;
+            color: #6C757D;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.2rem;
         }
-    </style>
-</head>
-<body>
-    <!-- Encabezado -->
-    <header>
-        <h1>Listado de Notas</h1>
-        <a href="/menu_principal" class="btn-back-home">
-            <i class="fas fa-home"></i> Volver al Inicio
-        </a>
-    </header>
+        
+        .detail-value {
+            font-weight: 500;
+            color: #212529;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(26, 35, 64, 0.08);
+        }
+        
+        .btn-accion-mobile {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+        }
+    }
+    
+    @media (min-width: 769px) {
+        .notas-cards {
+            display: none;
+        }
+    }
+    
+    /* Contador de registros */
+    .registros-count {
+        font-size: 0.85rem;
+        color: #6C757D;
+        margin-top: 1rem;
+        text-align: right;
+    }
+</style>
+{% endblock %}
 
-    <!-- Contenido principal -->
-    <div class="container">
+{% block content %}
+<div class="container py-4">
+    <!-- Header interno del módulo -->
+    <div class="listado-header">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+            <div>
+                <h1 class="listado-title">
+                    <i class='bx bxs-book-content'></i>
+                    Listado de Notas
+                </h1>
+                <p class="listado-subtitle mb-0">
+                    Visualice y administre todas las calificaciones registradas en el sistema
+                </p>
+            </div>
+            <div class="d-flex gap-2 mt-3 mt-md-0">
+                <a href="/menu_principal" class="btn btn-outline-primary">
+                    <i class='bx bx-arrow-back'></i>
+                    Volver al Panel
+                </a>
+                <a href="/form_registrar_notas" class="btn institutional-btn">
+                    <i class='bx bxs-plus-circle'></i>
+                    Nueva Nota
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenedor principal -->
+    <div class="listado-container">
         {% if r %}
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: '{{ r }}',
-                timer: 2000,
-                showConfirmButton: false
-            });
-        </script>
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <i class='bx bxs-check-circle me-2'></i>
+            <div>{{ r }}</div>
+        </div>
         {% endif %}
-
+        
         {% if notas %}
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Alumno</th>
-                    <th>Curso</th>
-                    <th>Nota</th>
-                    <th>Materia</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for x in notas %}
-                <tr>
-                    <td>{{ x.id }}</td>
-                    <td>{{ x.alumno.nombre }}</td>
-                    <td>{{ x.alumno.curso }}</td>
-                    <td>{{ x.nota }}</td>
-                    <td>{{ x.materia }}</td>
-                    <td>
-                        <a class="btn-icon btn-icon-edit" href="/form_actualizar_notas/{{ x.id }}">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <button class="btn-icon" onclick="confirmDelete({{ x.id }})">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <!-- Contador de registros -->
+        <div class="registros-count">
+            <i class='bx bxs-data'></i>
+            Mostrando {{ notas|length }} registro{{ notas|length|pluralize }}
+        </div>
+        
+        <!-- Tabla para desktop -->
+        <div class="table-responsive">
+            <table class="notas-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Alumno</th>
+                        <th>Curso</th>
+                        <th>Materia</th>
+                        <th>Nota</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in notas %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-light text-dark">#{{ x.id }}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class='bx bxs-user-circle me-2' style="color: #6C757D;"></i>
+                                {{ x.alumno.nombre }}
+                            </div>
+                        </td>
+                        <td>{{ x.alumno.curso }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class='bx bxs-book me-2' style="color: #6C757D;"></i>
+                                {{ x.materia }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {% if x.nota < 4.0 %}
+                                    <span class="nota-indicator nota-baja"></span>
+                                {% elif x.nota < 5.0 %}
+                                    <span class="nota-indicator nota-media"></span>
+                                {% elif x.nota < 6.0 %}
+                                    <span class="nota-indicator nota-alta"></span>
+                                {% else %}
+                                    <span class="nota-indicator nota-excelente"></span>
+                                {% endif %}
+                                <strong style="color: {% if x.nota < 4.0 %}#f44336{% elif x.nota < 5.0 %}#ff9800{% elif x.nota < 6.0 %}#4caf50{% else %}#2196f3{% endif %};">
+                                    {{ x.nota }}
+                                </strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="acciones-cell">
+                                <a href="/form_actualizar_notas/{{ x.id }}" class="btn-accion btn-editar" title="Editar">
+                                    <i class='bx bxs-edit-alt'></i>
+                                </a>
+                                <button class="btn-accion btn-eliminar" onclick="confirmDelete({{ x.id }})" title="Eliminar">
+                                    <i class='bx bxs-trash'></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Cards para móvil -->
+        <div class="notas-cards">
+            {% for x in notas %}
+            <div class="nota-card">
+                <div class="card-header">
+                    <span class="card-id">#{{ x.id }}</span>
+                    <span class="card-alumno">{{ x.alumno.nombre }}</span>
+                </div>
+                
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Curso</span>
+                        <span class="detail-value">{{ x.alumno.curso }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Materia</span>
+                        <span class="detail-value">{{ x.materia }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Nota</span>
+                        <span class="detail-value">
+                            <strong style="color: {% if x.nota < 4.0 %}#f44336{% elif x.nota < 5.0 %}#ff9800{% elif x.nota < 6.0 %}#4caf50{% else %}#2196f3{% endif %};">
+                                {{ x.nota }}
+                            </strong>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <a href="/form_actualizar_notas/{{ x.id }}" class="btn-accion btn-editar btn-accion-mobile" title="Editar">
+                        <i class='bx bxs-edit-alt'></i>
+                    </a>
+                    <button class="btn-accion btn-eliminar btn-accion-mobile" onclick="confirmDelete({{ x.id }})" title="Eliminar">
+                        <i class='bx bxs-trash'></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
         {% else %}
-        <div class="alert alert-warning text-center">
-            <strong>No hay registros para mostrar.</strong>
+        <!-- Estado vacío -->
+        <div class="estado-vacio">
+            <div class="estado-vacio-icon">
+                <i class='bx bxs-inbox'></i>
+            </div>
+            <h4 class="mb-2" style="color: #343A40;">No hay notas registradas</h4>
+            <p class="mb-3">Comience registrando la primera calificación en el sistema.</p>
+            <a href="/form_registrar_notas" class="btn institutional-btn">
+                <i class='bx bxs-plus-circle'></i>
+                Registrar Primera Nota
+            </a>
         </div>
         {% endif %}
     </div>
+</div>
+{% endblock %}
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 Colegio San Martín de Oasis. Todos los derechos reservados.</p>
-        <p>Contacto: <a href="mailto:contacto@colegiosmoasis.cl">contacto@colegiosmoasis.cl</a></p>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: `Deseas eliminar el registro con ID ${id}?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#c8102e',
-                cancelButtonColor: '#002b5c',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = `/eliminar_nota/${id}`;
-                }
+{% block extra_js %}
+<script>
+    // Función para confirmar eliminación
+    function confirmDelete(id) {
+        Swal.fire({
+            title: '¿Eliminar registro?',
+            html: `Esta acción eliminará permanentemente la calificación con ID <strong>#${id}</strong>.<br><br>Esta operación no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#A5163A',
+            cancelButtonColor: '#6C757D',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            background: '#FFFFFF',
+            color: '#212529'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Mostrar carga mientras se elimina
+                Swal.fire({
+                    title: 'Eliminando...',
+                    text: 'Por favor espere',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                // Redirigir a la eliminación
+                window.location.href = `/eliminar_nota/${id}`;
+            }
+        });
+    }
+    
+    // Resaltar fila al pasar el mouse
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('.notas-table tbody tr, .nota-card');
+        
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.2s ease';
             });
-        }
-    </script>
-</body>
-</html>
+        });
+    });
+</script>
+{% endblock %}
 

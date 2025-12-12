@@ -1,0 +1,667 @@
+/* ==========================================================================
+   VARIABLES CSS - PALETA INSTITUCIONAL
+   ========================================================================== */
+:root {
+    /* Colores institucionales */
+    --color-primary: #1A2340;      /* Azul profundo */
+    --color-secondary: #A5163A;    /* Rojo borgoña */
+    --color-accent: #1CA7C9;       /* Azul claro */
+    --color-accent-secondary: #6B2B82; /* Morado */
+    
+    /* Colores neutros */
+    --color-white: #FFFFFF;
+    --color-light: #F8F9FA;
+    --color-gray-light: #E9ECEF;
+    --color-gray: #6C757D;
+    --color-gray-dark: #343A40;
+    --color-dark: #212529;
+    
+    /* Tipografía */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Roboto', sans-serif;
+    
+    /* Espaciado */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Bordes */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(26, 35, 64, 0.08);
+    --shadow-md: 0 4px 12px rgba(26, 35, 64, 0.12);
+    --shadow-lg: 0 8px 24px rgba(26, 35, 64, 0.16);
+    
+    /* Transiciones */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ==========================================================================
+   ESTILOS BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ==========================================================================
+   HEADER INSTITUCIONAL
+   ========================================================================== */
+.institutional-header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2a3758 100%);
+    padding: var(--spacing-md) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.institutional-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-accent) 50%, var(--color-accent-secondary) 100%);
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-md);
+}
+
+.logo-container {
+    animation: fadeInDown 0.8s ease;
+}
+
+.institutional-logo {
+    height: 120px;
+    width: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.header-text {
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.institutional-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.institutional-slogan {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero-section {
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(180deg, var(--color-light) 0%, #f0f3f7 100%);
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+@media (min-width: 992px) {
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-xl);
+    }
+}
+
+.hero-text {
+    animation: fadeInLeft 0.8s ease;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.3;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--color-gray-dark);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.8;
+}
+
+/* Características institucionales */
+.institutional-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1rem;
+    color: var(--color-gray-dark);
+}
+
+.feature-item i {
+    color: var(--color-accent);
+    font-size: 1.3rem;
+    background: rgba(28, 167, 201, 0.1);
+    padding: 8px;
+    border-radius: 50%;
+}
+
+/* ==========================================================================
+   TARJETA DE LOGIN
+   ========================================================================== */
+.login-card-container {
+    animation: fadeInRight 0.8s ease;
+}
+
+.login-card {
+    background: var(--color-white);
+    border-radius: var(--border-radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(26, 35, 64, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.login-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.login-subtitle {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+}
+
+/* Formulario */
+.login-form {
+    margin-top: var(--spacing-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 500;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-label i {
+    color: var(--color-accent);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.institutional-input {
+    width: 100%;
+    padding: 12px 16px 12px 16px;
+    border: 2px solid var(--color-gray-light);
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-dark);
+    background: var(--color-white);
+    transition: all var(--transition-normal);
+}
+
+.institutional-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(28, 167, 201, 0.1);
+}
+
+.institutional-input::placeholder {
+    color: var(--color-gray);
+}
+
+.input-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gray);
+    pointer-events: none;
+}
+
+.institutional-input:focus + .input-icon {
+    color: var(--color-accent);
+}
+
+/* Opciones del formulario */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--spacing-md) 0;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-gray-light);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    appearance: none;
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.checkbox-custom:checked {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.checkbox-custom:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkbox-label {
+    font-size: 0.9rem;
+    color: var(--color-gray-dark);
+    cursor: pointer;
+}
+
+.forgot-password {
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.forgot-password:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+
+/* Botón de login */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    transition: all var(--transition-normal);
+}
+
+.institutional-btn {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #c2183b 100%);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+.institutional-btn:hover {
+    background: linear-gradient(135deg, #8a1230 0%, var(--color-secondary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(165, 22, 58, 0.25);
+}
+
+.institutional-btn:active {
+    transform: translateY(0);
+}
+
+/* Footer del login */
+.login-footer {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-gray-light);
+    text-align: center;
+}
+
+.support-text {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+}
+
+.support-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+.support-link:hover {
+    text-decoration: underline;
+    color: var(--color-accent-secondary);
+}
+
+/* ==========================================================================
+   FOOTER INSTITUCIONAL
+   ========================================================================== */
+.institutional-footer {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-xl) 0 var(--spacing-md);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr 2fr;
+        gap: var(--spacing-xl);
+    }
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .footer-brand {
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+.footer-logo {
+    height: 80px;
+    width: auto;
+    margin-bottom: var(--spacing-sm);
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+}
+
+.footer-brand-text h4 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.footer-brand-text p {
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+}
+
+.footer-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+    .footer-info {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.contact-info h5,
+.quick-links h5 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-accent);
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-info i {
+    color: var(--color-accent);
+}
+
+.quick-links ul {
+    list-style: none;
+}
+
+.quick-links li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.quick-links a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    display: inline-block;
+}
+
+.quick-links a:hover {
+    color: var(--color-accent);
+    transform: translateX(4px);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--spacing-md);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.social-links a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.2rem;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.social-links a:hover {
+    color: var(--color-white);
+    background: var(--color-accent);
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD
+   ========================================================================== */
+@media (max-width: 768px) {
+    .institutional-title {
+        font-size: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .login-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 576px) {
+    .institutional-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .institutional-logo {
+        height: 100px;
+    }
+    
+    .footer-brand {
+        text-align: center;
+    }
+    
+    .footer-info {
+        text-align: center;
+    }
+    
+    .contact-info p {
+        justify-content: center;
+    }
+}

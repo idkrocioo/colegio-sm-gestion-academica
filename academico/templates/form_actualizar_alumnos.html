@@ -1,209 +1,661 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="icon" href="{% static "img/icon.png"%}"/>
-    <title>Formulario Actualizar</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+{% extends "base.html" %}
+{% load static %}
 
-    <style>
-        /* General */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            color: #333;
+{% block title %}Actualizar Alumno – Colegio San Martín de Oasis{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ==========================================================================
+       FORMULARIO ACTUALIZAR ALUMNO - ESTILOS ESPECÍFICOS
+       ========================================================================== */
+    
+    /* Contenedor principal */
+    .form-page {
+        min-height: calc(100vh - 76px);
+        padding: 2rem 0;
+        background: linear-gradient(135deg, 
+            rgba(26, 35, 64, 0.03) 0%, 
+            rgba(28, 167, 201, 0.03) 100%);
+    }
+    
+    /* Encabezado minimalista */
+    .form-header-minimal {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(26, 35, 64, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+        .form-header-minimal {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
         }
-        header {
-            background: linear-gradient(90deg, #002b5c, #c8102e);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            border-bottom: 3px solid #9b0f21;
+    }
+    
+    .form-header-title h1 {
+        font-family: var(--font-heading);
+        font-size: 1.8rem;
+        color: var(--color-primary);
+        margin-bottom: 0.25rem;
+        font-weight: 700;
+    }
+    
+    .form-header-subtitle {
+        color: var(--color-gray);
+        font-size: 0.95rem;
+        margin: 0;
+    }
+    
+    /* Tarjeta del formulario */
+    .form-card-modern {
+        background: white;
+        border-radius: 16px;
+        padding: 0;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(26, 35, 64, 0.1);
+        overflow: hidden;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    /* Encabezado de la tarjeta */
+    .form-card-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #2a3758 100%);
+        padding: 1.5rem 2rem;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-card-header h2 {
+        font-family: var(--font-heading);
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .form-card-header h2 i {
+        color: var(--color-accent);
+    }
+    
+    /* Cuerpo del formulario */
+    .form-card-body {
+        padding: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .form-card-body {
+            padding: 1.5rem;
         }
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin: 0;
+    }
+    
+    /* Secciones del formulario */
+    .form-section {
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    .section-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(26, 35, 64, 0.1);
+    }
+    
+    .section-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.3rem;
+    }
+    
+    .icon-student {
+        background: linear-gradient(135deg, rgba(28, 167, 201, 0.15), rgba(107, 43, 130, 0.15));
+        color: var(--color-accent);
+    }
+    
+    .icon-guardian {
+        background: linear-gradient(135deg, rgba(165, 22, 58, 0.15), rgba(26, 35, 64, 0.15));
+        color: var(--color-secondary);
+    }
+    
+    .section-title h3 {
+        font-size: 1.4rem;
+        color: var(--color-primary);
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .section-description {
+        color: var(--color-gray);
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+    
+    /* Grid del formulario */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    /* Grupos de formulario */
+    .form-group-modern {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label-modern {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .form-label-modern i {
+        margin-right: 0.5rem;
+        color: var(--color-accent);
+        font-size: 1.1rem;
+    }
+    
+    .form-label-required::after {
+        content: " *";
+        color: var(--color-secondary);
+        margin-left: 2px;
+    }
+    
+    /* Inputs modernos */
+    .form-input-modern {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--color-gray-light);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: var(--font-body);
+        color: var(--color-dark);
+        background: white;
+        transition: all var(--transition-normal);
+    }
+    
+    .form-input-modern:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(28, 167, 201, 0.1);
+    }
+    
+    .form-input-modern:hover {
+        border-color: rgba(28, 167, 201, 0.3);
+    }
+    
+    /* Helper text */
+    .form-helper-modern {
+        font-size: 0.8rem;
+        color: var(--color-gray);
+        margin-top: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    
+    /* Indicador de contraseña */
+    .password-strength-indicator {
+        margin-top: 0.5rem;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--color-gray-light);
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .password-strength-bar {
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease, background-color 0.3s ease;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    
+    .strength-weak { 
+        background-color: #f44336; 
+        width: 33%; 
+    }
+    
+    .strength-medium { 
+        background-color: #ff9800; 
+        width: 66%; 
+    }
+    
+    .strength-strong { 
+        background-color: #4caf50; 
+        width: 100%; 
+    }
+    
+    /* Acciones del formulario */
+    .form-actions-modern {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .btn-form-save {
+        flex: 1;
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        background: linear-gradient(135deg, var(--color-secondary) 0%, #c2183b 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+    }
+    
+    .btn-form-save:hover {
+        background: linear-gradient(135deg, #8a1230 0%, var(--color-secondary) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(165, 22, 58, 0.25);
+    }
+    
+    .btn-form-back {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: white;
+        border: 2px solid var(--color-gray-light);
+        color: var(--color-primary);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all var(--transition-normal);
+    }
+    
+    .btn-form-back:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+        transform: translateY(-1px);
+    }
+    
+    /* Mensajes del sistema */
+    .form-message-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Responsividad */
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
         }
-        header a {
-            color: #f8d64e;
-            text-decoration: none;
-            font-weight: bold;
+        
+        .form-actions-modern {
+            flex-direction: column;
         }
-        header a:hover {
-            text-decoration: underline;
+        
+        .form-header-minimal {
+            padding: 1.25rem;
         }
-        .btn-back-home {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            background-color: #c8102e;
-            text-decoration: none;
-            border-radius: 25px;
-            border: 2px solid white;
-            transition: all 0.3s ease-in-out;
+        
+        .form-card-header {
+            padding: 1.25rem;
         }
-        .btn-back-home i {
-            margin-right: 8px;
+        
+        .form-card-header h2 {
+            font-size: 1.4rem;
         }
-        .btn-back-home:hover {
-            background-color: #9b0f21;
-            color: #fff;
-            transform: scale(1.1);
+    }
+    
+    @media (max-width: 576px) {
+        .form-page {
+            padding: 1rem 0;
         }
-        .form-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 40px;
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        
+        .form-card-body {
+            padding: 1.25rem;
         }
-        .form-container h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #002b5c;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            border-bottom: 2px solid #c8102e;
-            padding-bottom: 10px;
-        }
-        .form-label {
-            font-weight: bold;
-            color: #002b5c;
-        }
-        .form-control {
-            border: 2px solid #c8102e;
-            background-color: #ffffff;
-            border-radius: 8px;
-            font-size: 1rem;
-            padding: 10px;
-        }
-        .form-control:focus {
-            border-color: #c8102e;
-            box-shadow: 0 0 10px #c8102e;
-            outline: none;
-        }
-        .btn-primary {
-            background-color: #c8102e;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
+        
+        .section-title h3 {
             font-size: 1.2rem;
-            text-align: center;
-            display: block;
-            margin: 20px auto 0;
-            transition: all 0.3s ease-in-out;
         }
-        .btn-primary:hover {
-            transform: scale(1.1);
-            background-color: #9b0f21;
-        }
-        footer {
-            background-color: #002b5c;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 40px;
-        }
-        footer a {
-            color: #c8102e;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <!-- Encabezado -->
-    <header>
-        <h1>Formulario Actualizar</h1>
-        <a href="/menu_principal" class="btn-back-home">
-            <i class="fas fa-home"></i> Volver al Inicio
-        </a>
-    </header>
-    <!-- Contenedor -->
-    <div class="form-container">
-        <h2>Actualizar Datos</h2>
-        {% if r %}
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Acción OK',
-                    text: '{{ r }}',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-            </script>
-        {% endif %}
-        {% if r2 %}
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '{{ r2 }}',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-            </script>
-        {% endif %}
-        <form action="/actualizar_alumnos/{{ alu.id }}" method="post">
-            {% csrf_token %}
-            <!-- Nombre -->
-            <div class="mb-4">
-                <label class="form-label" for="txtnom">Nombre</label>
-                <input class="form-control" id="txtnom" name="txtnom" type="text" placeholder="Ingrese nombre" required value="{{ alu.nombre }}">
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="container">
+        <!-- Encabezado minimalista -->
+        <div class="form-header-minimal">
+            <div class="form-header-title">
+                <h1>Actualizar Datos de Alumno</h1>
+                <p class="form-header-subtitle">
+                    Modifica la información académica y del apoderado responsable
+                </p>
             </div>
-            <!-- Curso -->
-            <div class="mb-4">
-                <label class="form-label" for="txtcur">Curso</label>
-                <input class="form-control" id="txtcur" name="txtcur" type="text" placeholder="Ingrese curso" required value="{{ alu.curso }}">
+            <a href="/menu_principal" class="btn btn-outline-primary">
+                <i class='bx bx-arrow-back'></i>
+                Volver al Panel
+            </a>
+        </div>
+
+        <!-- Tarjeta del formulario -->
+        <div class="form-card-modern">
+            <!-- Encabezado de la tarjeta -->
+            <div class="form-card-header">
+                <h2>
+                    <i class='bx bxs-user-detail'></i>
+                    Formulario de Actualización
+                </h2>
             </div>
-            <!-- Matrícula -->
-            <div class="mb-4">
-                <label class="form-label" for="txtmat">Matrícula</label>
-                <input class="form-control" id="txtmat" name="txtmat" type="text" placeholder="Ingrese matrícula" required value="{{ alu.matricula }}">
+
+            <!-- Cuerpo del formulario -->
+            <div class="form-card-body">
+                <!-- Mensajes del sistema -->
+                <div class="form-message-container">
+                    {% if r or r2 %}
+                        <!-- Mensajes manejados por SweetAlert2 -->
+                    {% endif %}
+                </div>
+
+                <!-- Formulario principal -->
+                <form action="/actualizar_alumnos/{{ alu.id }}" method="post" id="actualizarAlumnoForm">
+                    {% csrf_token %}
+                    
+                    <!-- Sección 1: Datos del Estudiante -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <div class="section-icon icon-student">
+                                <i class='bx bxs-graduation'></i>
+                            </div>
+                            <div>
+                                <h3>Datos del Estudiante</h3>
+                                <p class="section-description">
+                                    Información académica y personal del alumno
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <!-- Campo: Nombre -->
+                            <div class="form-group-modern">
+                                <label for="txtnom" class="form-label-modern form-label-required">
+                                    <i class='bx bxs-user'></i>
+                                    Nombre Completo
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-input-modern" 
+                                    id="txtnom" 
+                                    name="txtnom" 
+                                    placeholder="Ej: Juan Pérez González"
+                                    required
+                                    value="{{ alu.nombre }}"
+                                >
+                                <div class="form-helper-modern">
+                                    <i class='bx bx-info-circle'></i>
+                                    <span>Nombre completo del estudiante</span>
+                                </div>
+                            </div>
+
+                            <!-- Campo: Curso -->
+                            <div class="form-group-modern">
+                                <label for="txtcur" class="form-label-modern form-label-required">
+                                    <i class='bx bxs-school'></i>
+                                    Curso
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-input-modern" 
+                                    id="txtcur" 
+                                    name="txtcur" 
+                                    placeholder="Ej: 4° Básico A"
+                                    required
+                                    value="{{ alu.curso }}"
+                                >
+                                <div class="form-helper-modern">
+                                    <i class='bx bx-info-circle'></i>
+                                    <span>Curso y paralelo del estudiante</span>
+                                </div>
+                            </div>
+
+                            <!-- Campo: Matrícula -->
+                            <div class="form-group-modern">
+                                <label for="txtmat" class="form-label-modern form-label-required">
+                                    <i class='bx bxs-id-card'></i>
+                                    Matrícula
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-input-modern" 
+                                    id="txtmat" 
+                                    name="txtmat" 
+                                    placeholder="Ej: 2024-00123"
+                                    required
+                                    value="{{ alu.matricula }}"
+                                >
+                                <div class="form-helper-modern">
+                                    <i class='bx bx-info-circle'></i>
+                                    <span>Código único de identificación académica</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 2: Datos del Apoderado Responsable -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <div class="section-icon icon-guardian">
+                                <i class='bx bxs-user-badge'></i>
+                            </div>
+                            <div>
+                                <h3>Datos del Apoderado Responsable</h3>
+                                <p class="section-description">
+                                    Información de contacto y acceso del tutor legal
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <!-- Campo: Nombre del Apoderado -->
+                            <div class="form-group-modern">
+                                <label for="txtapo" class="form-label-modern form-label-required">
+                                    <i class='bx bxs-user-circle'></i>
+                                    Nombre del Apoderado
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-input-modern" 
+                                    id="txtapo" 
+                                    name="txtapo" 
+                                    placeholder="Ej: María González López"
+                                    required
+                                    value="{{ alu.apoderado.nombre }}"
+                                >
+                                <div class="form-helper-modern">
+                                    <i class='bx bx-info-circle'></i>
+                                    <span>Nombre completo del tutor legal</span>
+                                </div>
+                            </div>
+
+                            <!-- Campo: Rut -->
+                            <div class="form-group-modern">
+                                <label for="txtrut" class="form-label-modern form-label-required">
+                                    <i class='bx bxs-id-card'></i>
+                                    Rut
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-input-modern" 
+                                    id="txtrut" 
+                                    name="txtrut" 
+                                    placeholder="Ej: 12.345.678-9"
+                                    required
+                                    value="{{ alu.apoderado.rut }}"
+                                >
+                                <div class="form-helper-modern">
+                                    <i class='bx bx-info-circle'></i>
+                                    <span>Formato: 12.345.678-9</span>
+                                </div>
+                            </div>
+
+                            <!-- Campo: Contraseña -->
+                            <div class="form-group-modern">
+                                <label for="txtpas" class="form-label-modern form-label-required">
+                                    <i class='bx bxs-lock-alt'></i>
+                                    Contraseña de Acceso
+                                </label>
+                                <input 
+                                    type="password" 
+                                    class="form-input-modern" 
+                                    id="txtpas" 
+                                    name="txtpas" 
+                                    placeholder="Ingresa la contraseña"
+                                    required
+                                    value="{{ alu.apoderado.contraseña }}"
+                                >
+                                <div class="form-helper-modern">
+                                    <i class='bx bx-info-circle'></i>
+                                    <span>Contraseña para acceso al sistema</span>
+                                </div>
+                                <div class="password-strength-indicator">
+                                    <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acciones del formulario -->
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-form-save">
+                            <i class='bx bxs-save'></i>
+                            Guardar Cambios
+                        </button>
+                        <a href="/listado_alumnos" class="btn-form-back">
+                            <i class='bx bx-x'></i>
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
             </div>
-            <h1 style="text-align:center;">Datos del Apoderado</h1>
-            <div class="mb-4">
-                <label class="form-label" for="txtapo">Nombre del apoderado</label>
-                <input class="form-control" id="txtapo" name="txtapo" placeholder="Ingrese matrícula" required type="text"value="{{ alu.apoderado.nombre }}"/>
-            </div>
-            <div class="mb-4">
-                <label class="form-label" for="txtrut">Rut</label>
-                <input class="form-control" id="txtrut" name="txtrut" placeholder="Ingrese Rut del usuario: XXXXXXXX-X" required type="text" value="{{ alu.apoderado.rut }}"/>
-            </div>
-            <div class="mb-4">
-                <label class="form-label" for="txtpas">Contraseña para acceder al sistema</label>
-                <input class="form-control" id="txtpas" name="txtpas" placeholder="Ingresa la contraseña" required type="password" value="{{ alu.apoderado.contraseña }}"/>
-            </div>
-            <!-- Botón -->
-            <button type="submit" class="btn-primary">Guardar Datos</button>
-        </form>
+        </div>
     </div>
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 Colegio San Martín de Oasis. Todos los derechos reservados.</p>
-        <p>Contacto: <a href="mailto:contacto@colegiosmoasis.cl">contacto@colegiosmoasis.cl</a> | Tel: +56 9 1234 5678</p>
-    </footer>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Validación de formulario
+    document.getElementById('actualizarAlumnoForm').addEventListener('submit', function(e) {
+        const rutInput = document.getElementById('txtrut');
+        const rutValue = rutInput.value.trim();
+        
+        // Validación básica de formato RUT chileno
+        const rutRegex = /^[0-9]{1,2}\.?[0-9]{3}\.?[0-9]{3}-[0-9kK]$/;
+        
+        if (rutValue && !rutRegex.test(rutValue)) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Formato de RUT Inválido',
+                text: 'Por favor ingrese un RUT válido (Ej: 12.345.678-9)',
+                confirmButtonColor: 'var(--color-secondary)'
+            });
+            rutInput.focus();
+        }
+    });
+    
+    // Indicador de fortaleza de contraseña
+    document.getElementById('txtpas').addEventListener('input', function() {
+        const password = this.value;
+        const strengthBar = document.getElementById('passwordStrengthBar');
+        
+        // Remover clases anteriores
+        strengthBar.classList.remove('strength-weak', 'strength-medium', 'strength-strong');
+        
+        if (password.length === 0) {
+            strengthBar.style.width = '0%';
+        } else if (password.length < 6) {
+            strengthBar.classList.add('strength-weak');
+        } else if (password.length < 10) {
+            strengthBar.classList.add('strength-medium');
+        } else {
+            strengthBar.classList.add('strength-strong');
+        }
+    });
+    
+    // Inicializar indicador de contraseña con valor actual
+    document.addEventListener('DOMContentLoaded', function() {
+        const password = document.getElementById('txtpas').value;
+        const strengthBar = document.getElementById('passwordStrengthBar');
+        
+        if (password.length >= 10) {
+            strengthBar.classList.add('strength-strong');
+        } else if (password.length >= 6) {
+            strengthBar.classList.add('strength-medium');
+        } else if (password.length > 0) {
+            strengthBar.classList.add('strength-weak');
+        }
+    });
+</script>
+
+<!-- Mensajes SweetAlert2 -->
+{% if r %}
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Actualización Exitosa',
+        text: '{{ r }}',
+        showConfirmButton: false,
+        timer: 3000,
+        position: 'top-end',
+        toast: true,
+        background: 'var(--color-white)',
+        color: 'var(--color-dark)'
+    });
+</script>
+{% endif %}
+
+{% if r2 %}
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error en la Actualización',
+        text: '{{ r2 }}',
+        showConfirmButton: false,
+        timer: 4000,
+        position: 'top-end',
+        toast: true,
+        background: 'var(--color-white)',
+        color: 'var(--color-dark)'
+    });
+</script>
+{% endif %}
+{% endblock %}

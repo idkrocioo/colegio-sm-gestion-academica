@@ -1,203 +1,609 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    {% load static %}
-    <link rel="icon" href="{% static "img/icon.png"%}"/>
-    <title>Formulario de Registro</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
-    <style>
-        /* General */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            color: #333;
-        }
-        header {
-            background: linear-gradient(90deg, #002b5c, #c8102e);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            border-bottom: 3px solid #9b0f21;
-        }
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin: 0;
-        }
-        header p a {
-            color: #c8102e;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        header p a:hover {
-            text-decoration: underline;
-        }
-        .btn-back-home {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            background-color: #c8102e;
-            text-decoration: none;
-            border-radius: 25px;
-            border: 2px solid white;
-            transition: all 0.3s ease-in-out;
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Registro de Alumno – Colegio San Martín de Oasis{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estilos específicos para el formulario de registro de alumno */
+    .form-page-header {
+        background: linear-gradient(135deg, rgba(26, 35, 64, 0.05) 0%, rgba(165, 22, 58, 0.05) 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--color-accent);
+    }
+    
+    .form-main-title {
+        font-size: 1.8rem;
+        color: var(--color-primary);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-subtitle {
+        color: var(--color-gray);
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+    
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(26, 35, 64, 0.1);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .form-section {
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(26, 35, 64, 0.1);
+    }
+    
+    .section-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .icon-student {
+        background: linear-gradient(135deg, rgba(28, 167, 201, 0.15), rgba(107, 43, 130, 0.15));
+        color: var(--color-accent);
+    }
+    
+    .icon-tutor {
+        background: linear-gradient(135deg, rgba(165, 22, 58, 0.15), rgba(26, 35, 64, 0.15));
+        color: var(--color-secondary);
+    }
+    
+    .section-title {
+        font-size: 1.4rem;
+        color: var(--color-primary);
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .section-description {
+        color: var(--color-gray);
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+    
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .form-label {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .form-label i {
+        margin-right: 0.5rem;
+        color: var(--color-accent);
+        font-size: 1.1rem;
+    }
+    
+    .form-label-required::after {
+        content: " *";
+        color: var(--color-secondary);
+        margin-left: 2px;
+    }
+    
+    .form-input-wrapper {
+        position: relative;
+    }
+    
+    .form-control-custom {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--color-gray-light);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: var(--font-body);
+        color: var(--color-dark);
+        background: white;
+        transition: all var(--transition-normal);
+    }
+    
+    .form-control-custom:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(28, 167, 201, 0.1);
+    }
+    
+    .form-control-custom:hover {
+        border-color: rgba(28, 167, 201, 0.3);
+    }
+    
+    .form-helper {
+        font-size: 0.8rem;
+        color: var(--color-gray);
+        margin-top: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    
+    .form-helper i {
+        font-size: 0.9rem;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(26, 35, 64, 0.08);
+    }
+    
+    .btn-form-submit {
+        flex: 1;
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+    
+    .btn-form-back {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .form-message-success {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #2e7d32;
+    }
+    
+    .form-message-error {
+        background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.05));
+        border: 1px solid rgba(244, 67, 54, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #d32f2f;
+    }
+    
+    /* Responsividad */
+    @media (max-width: 768px) {
+        .form-card {
+            padding: 1.5rem;
         }
         
-        .btn-back-home i {
-            margin-right: 8px;
+        .form-grid {
+            grid-template-columns: 1fr;
         }
         
-        .btn-back-home:hover {
-            background-color: #9b0f21;
-            color: #fff;
-            transform: scale(1.1);
+        .form-main-title {
+            font-size: 1.6rem;
         }
-        .form-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 40px;
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        .form-container h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #002b5c;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            border-bottom: 2px solid #c8102e;
-            padding-bottom: 10px;
-        }
-        .form-label {
-            font-weight: bold;
-            color: #002b5c;
-        }
-        .form-control {
-            border: 2px solid #c8102e;
-            background-color: #ffffff;
-            border-radius: 8px;
-            font-size: 1rem;
-            padding: 10px;
-        }
-        .form-control:focus {
-            border-color: #c8102e;
-            box-shadow: 0 0 10px #c8102e;
-            outline: none;
-        }
-        .btn-primary {
-            background-color: #c8102e;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
+        
+        .section-title {
             font-size: 1.2rem;
-            text-align: center;
-            display: block;
-            margin: 20px auto 0;
-            transition: all 0.3s ease-in-out;
         }
-        .btn-primary:hover {
-            transform: scale(1.1);
-            background-color: #9b0f21;
+        
+        .form-actions {
+            flex-direction: column;
         }
-        footer {
-            background-color: #002b5c;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 40px;
+    }
+    
+    /* Indicador de fortaleza de contraseña */
+    .password-strength {
+        margin-top: 0.5rem;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--color-gray-light);
+        overflow: hidden;
+    }
+    
+    .password-strength-bar {
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    
+    .strength-weak { 
+        background-color: #f44336; 
+        width: 33%; 
+    }
+    
+    .strength-medium { 
+        background-color: #ff9800; 
+        width: 66%; 
+    }
+    
+    .strength-strong { 
+        background-color: #4caf50; 
+        width: 100%; 
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header del Formulario -->
+    <div class="form-page-header">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+            <div>
+                <h1 class="form-main-title">
+                    <i class='bx bxs-user-plus'></i>
+                    Registro de Alumno
+                </h1>
+                <p class="form-subtitle">
+                    Complete los datos del estudiante y su tutor o apoderado responsable
+                </p>
+            </div>
+            <a href="/menu_principal" class="btn btn-outline-primary mt-3 mt-md-0">
+                <i class='bx bx-arrow-back'></i>
+                Volver al Panel
+            </a>
+        </div>
+    </div>
+    
+    <!-- Tarjeta del Formulario -->
+    <div class="form-card">
+        <!-- Mensajes del Sistema -->
+        {% if r %}
+        <div class="form-message-success">
+            <i class='bx bxs-check-circle'></i>
+            <span>{{ r }}</span>
+        </div>
+        {% endif %}
+        
+        {% if r2 %}
+        <div class="form-message-error">
+            <i class='bx bxs-error-circle'></i>
+            <span>{{ r2 }}</span>
+        </div>
+        {% endif %}
+        
+        <!-- Formulario Principal -->
+        <form action="/form_registrar_alumno" method="post" id="registroForm">
+            {% csrf_token %}
+            
+            <!-- Sección 1: Datos del Estudiante -->
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon icon-student">
+                        <i class='bx bxs-graduation'></i>
+                    </div>
+                    <div>
+                        <h2 class="section-title">Datos del Estudiante</h2>
+                        <p class="section-description">Información académica y personal del alumno</p>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <!-- Nombre del Alumno -->
+                    <div class="form-group">
+                        <label for="txtnom" class="form-label form-label-required">
+                            <i class='bx bxs-user'></i>
+                            Nombre Completo
+                        </label>
+                        <div class="form-input-wrapper">
+                            <input 
+                                type="text" 
+                                class="form-control-custom" 
+                                id="txtnom" 
+                                name="txtnom" 
+                                placeholder="Ej: Juan Pérez González"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="form-helper">
+                            <i class='bx bx-info-circle'></i>
+                            <span>Ingrese el nombre completo del estudiante</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Curso -->
+                    <div class="form-group">
+                        <label for="txtcur" class="form-label form-label-required">
+                            <i class='bx bxs-school'></i>
+                            Curso
+                        </label>
+                        <div class="form-input-wrapper">
+                            <input 
+                                type="text" 
+                                class="form-control-custom" 
+                                id="txtcur" 
+                                name="txtcur" 
+                                placeholder="Ej: 4° Básico A"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="form-helper">
+                            <i class='bx bx-info-circle'></i>
+                            <span>Indique el nivel y letra del curso</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Matrícula -->
+                    <div class="form-group">
+                        <label for="txtmat" class="form-label form-label-required">
+                            <i class='bx bxs-id-card'></i>
+                            Matrícula
+                        </label>
+                        <div class="form-input-wrapper">
+                            <input 
+                                type="text" 
+                                class="form-control-custom" 
+                                id="txtmat" 
+                                name="txtmat" 
+                                placeholder="Ej: MAT2024001"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="form-helper">
+                            <i class='bx bx-info-circle'></i>
+                            <span>Número de matrícula institucional</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección 2: Datos del Tutor/Apoderado -->
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon icon-tutor">
+                        <i class='bx bxs-user-account'></i>
+                    </div>
+                    <div>
+                        <h2 class="section-title">Datos del Tutor o Apoderado Responsable</h2>
+                        <p class="section-description">Información del responsable legal del estudiante</p>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <!-- Nombre del Apoderado -->
+                    <div class="form-group">
+                        <label for="txtapo" class="form-label form-label-required">
+                            <i class='bx bxs-user-detail'></i>
+                            Nombre del Apoderado
+                        </label>
+                        <div class="form-input-wrapper">
+                            <input 
+                                type="text" 
+                                class="form-control-custom" 
+                                id="txtapo" 
+                                name="txtapo" 
+                                placeholder="Ej: María González López"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="form-helper">
+                            <i class='bx bx-info-circle'></i>
+                            <span>Nombre completo del tutor o apoderado</span>
+                        </div>
+                    </div>
+                    
+                    <!-- RUT del Apoderado -->
+                    <div class="form-group">
+                        <label for="txtrut" class="form-label form-label-required">
+                            <i class='bx bxs-id-card'></i>
+                            RUT
+                        </label>
+                        <div class="form-input-wrapper">
+                            <input 
+                                type="text" 
+                                class="form-control-custom" 
+                                id="txtrut" 
+                                name="txtrut" 
+                                placeholder="Ej: 12.345.678-9"
+                                required
+                                autocomplete="off"
+                                pattern="^[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}-[0-9kK]{1}$"
+                                title="Formato: 12.345.678-9"
+                            >
+                        </div>
+                        <div class="form-helper">
+                            <i class='bx bx-info-circle'></i>
+                            <span>Formato: 12.345.678-9 (con puntos y guión)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Contraseña -->
+                    <div class="form-group">
+                        <label for="txtpas" class="form-label form-label-required">
+                            <i class='bx bxs-lock-alt'></i>
+                            Contraseña de Acceso
+                        </label>
+                        <div class="form-input-wrapper">
+                            <input 
+                                type="password" 
+                                class="form-control-custom" 
+                                id="txtpas" 
+                                name="txtpas" 
+                                placeholder="Mínimo 6 caracteres"
+                                required
+                                minlength="6"
+                                autocomplete="new-password"
+                            >
+                        </div>
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="passwordStrength"></div>
+                        </div>
+                        <div class="form-helper">
+                            <i class='bx bx-info-circle'></i>
+                            <span>Contraseña para que el apoderado acceda al sistema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Acciones del Formulario -->
+            <div class="form-actions">
+                <button type="submit" class="btn institutional-btn btn-form-submit">
+                    <i class='bx bxs-save'></i>
+                    Guardar Datos del Alumno
+                </button>
+                <button type="reset" class="btn btn-outline-secondary btn-form-back">
+                    <i class='bx bx-reset'></i>
+                    Limpiar Formulario
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Validación y feedback de contraseña
+    document.getElementById('txtpas').addEventListener('input', function() {
+        const password = this.value;
+        const strengthBar = document.getElementById('passwordStrength');
+        
+        // Calcular fortaleza
+        let strength = 0;
+        if (password.length >= 6) strength++;
+        if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+        if (password.match(/\d/)) strength++;
+        if (password.match(/[^a-zA-Z\d]/)) strength++;
+        
+        // Actualizar barra visual
+        strengthBar.className = 'password-strength-bar';
+        if (password.length === 0) {
+            strengthBar.style.width = '0%';
+        } else if (strength === 1) {
+            strengthBar.className += ' strength-weak';
+        } else if (strength === 2 || strength === 3) {
+            strengthBar.className += ' strength-medium';
+        } else if (strength >= 4) {
+            strengthBar.className += ' strength-strong';
         }
-        footer a {
-            color: #c8102e;
-            text-decoration: none;
+    });
+    
+    // Formateo automático de RUT
+    document.getElementById('txtrut').addEventListener('input', function(e) {
+        let rut = this.value.replace(/[^0-9kK]/g, '');
+        
+        if (rut.length > 1) {
+            let body = rut.slice(0, -1);
+            let dv = rut.slice(-1).toUpperCase();
+            
+            // Formatear con puntos
+            body = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            rut = body + '-' + dv;
         }
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-<!-- Encabezado -->
-<header>
-    <h1>Formulario de Registro</h1>
-    <a href="/menu_principal" class="btn-back-home">
-        <i class="fas fa-home"></i> Volver al Inicio
-    </a>
-</header>
-<!-- Contenido principal -->
-<div class="form-container">
-    {% if r %}
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Acción OK',
-                text: '{{ r }}',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        </script>
-    {% endif %}
-    {% if r2 %}
-        <script>
+        
+        this.value = rut;
+    });
+    
+    // Validación antes de enviar
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+        // Validación básica de RUT
+        const rutInput = document.getElementById('txtrut');
+        const rutValue = rutInput.value.trim();
+        
+        if (rutValue && !/^[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}-[0-9kK]{1}$/.test(rutValue)) {
+            e.preventDefault();
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: '{{ r2 }}',
-                showConfirmButton: false,
-                timer: 2000
+                title: 'RUT Inválido',
+                text: 'Por favor ingrese un RUT en formato válido (ej: 12.345.678-9)',
+                confirmButtonColor: 'var(--color-secondary)'
             });
-        </script>
-    {% endif %}
+            rutInput.focus();
+        }
+        
+        // Validación de contraseña
+        const passInput = document.getElementById('txtpas');
+        if (passInput.value.length < 6) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Contraseña Inválida',
+                text: 'La contraseña debe tener al menos 6 caracteres',
+                confirmButtonColor: 'var(--color-secondary)'
+            });
+            passInput.focus();
+        }
+    });
+</script>
 
-    <h2>Registrar Alumno</h2>
-    <form action="/form_registrar_alumno" method="post">
-        {% csrf_token %}
-        <div class="mb-4">
-            <label class="form-label" for="txtnom">Nombre</label>
-            <input class="form-control" id="txtnom" name="txtnom" placeholder="Ingrese nombre" required type="text"/>
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="txtcur">Curso</label>
-            <input class="form-control" id="txtcur" name="txtcur" placeholder="Ingrese curso" required type="text"/>
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="txtmat">Matrícula</label>
-            <input class="form-control" id="txtmat" name="txtmat" placeholder="Ingrese matrícula" required type="text"/>
-        </div>
-        <h2>Datos del Tutor o Apoderado Responsable</h2>
-        <div class="mb-4">
-            <label class="form-label" for="txtapo">Nombre del apoderado</label>
-            <input class="form-control" id="txtapo" name="txtapo" placeholder="Ingrese matrícula" required type="text"/>
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="txtrut">Rut</label>
-            <input class="form-control" id="txtrut" name="txtrut" placeholder="Ingrese Rut del usuario: XXXXXXXX-X" required type="text"/>
-        </div>
-        <div class="mb-4">
-            <label class="form-label" for="txtpas">Contraseña para acceder al sistema</label>
-            <input class="form-control" id="txtpas" name="txtpas" placeholder="Ingresa la contraseña" required type="password"/>
-        </div>
-        <button type="submit" class="btn-primary">Guardar Datos</button>
-    </form>
-</div>
-<!-- Footer -->
-<footer>
-    <p>© 2024 Colegio San Martín de Oasis. Todos los derechos reservados.</p>
-    <p>Contacto: <a href="mailto:contacto@colegiosmoasis.cl">contacto@colegiosmoasis.cl</a> | Tel: +56 9 1234 5678</p>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- Mensajes SweetAlert2 -->
+{% if r %}
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Registro Exitoso',
+        text: '{{ r }}',
+        showConfirmButton: false,
+        timer: 3000,
+        position: 'top-end',
+        toast: true,
+        background: 'var(--color-white)',
+        color: 'var(--color-dark)'
+    });
+</script>
+{% endif %}
+
+{% if r2 %}
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error en el Registro',
+        text: '{{ r2 }}',
+        showConfirmButton: false,
+        timer: 4000,
+        position: 'top-end',
+        toast: true,
+        background: 'var(--color-white)',
+        color: 'var(--color-dark)'
+    });
+</script>
+{% endif %}
+{% endblock %}
